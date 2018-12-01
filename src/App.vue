@@ -6,7 +6,41 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import jsx from './index'
+
+var {div, p, span} = jsx
+
+var TestBind = {
+  render (h) {
+    jsx.use(h)
+
+    return span('test bind')
+  }
+}
+
+var HelloWorld = {
+  props: {
+    msg: String
+  },
+  components: {
+    TestBind,
+  },
+  render (h) {
+    jsx.use(h)
+
+    var test = jsx.bind('test-bind')
+
+    var $pnode = p({
+      s_color: 'red',
+    }, this.msg)
+
+    return jsx.create('div.hello', 
+      this.msg, 
+      $pnode,
+      test(),
+    )
+  }
+}
 
 export default {
   name: 'app',
@@ -24,5 +58,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.hello{
+  font-size: 30px;
 }
 </style>
