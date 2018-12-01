@@ -1,6 +1,6 @@
 {
   "name": "vue-jsx",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "dist/vue-jsx.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
