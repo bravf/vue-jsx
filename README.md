@@ -34,31 +34,31 @@ var HelloWorld = {
   用法：jsx.use(h)
 
 2、jsx.create
-  描述：创建 vnode 节点
+  描述：创建 vnode 节点
   用法：
     jsx.create('div')
     jsx.create('div.hello')
     jsx.create('div.hello + world')
     jsx.create('div', {
-      # c 表示 class
+      //  c 表示 class
       c_hello: true,
       
-      # s 表示 style 
+      //  s 表示 style 
       s_color: 'red',
 
-      # a 表示 attrs
+      //  a 表示 attrs
       a_id: 'my_id',
 
-      # p 表示 props
+      //  p 表示 props
       p_msg: 'hello, world',
 
-      # dp 表示 domProps
+      //  dp 表示 domProps
       dp_value: 'input value',
 
-      # o 表示 on
+      //  o 表示 on
       o_click () {},
 
-      # no 表示 nativeOn
+      //  no 表示 nativeOn
       no_click () {},
     })
     jsx.create('div', {s_color:'red'}, 'nihao', 'nihao2')
