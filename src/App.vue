@@ -34,7 +34,7 @@ var HelloWorld = {
       s_color: 'red',
     }, this.msg)
 
-    return jsx.create('div.hello', 
+    return jsx.create('div.hello + world', 
       this.msg, 
       $pnode,
       test(),
