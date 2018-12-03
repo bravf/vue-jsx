@@ -79,19 +79,16 @@ var jsx = {
 
     //- 处理vmodel
     if ('vmodel' in node.props){
-      var [context, model] = node.props['vmodel']
+      var [context, model, modelProp, modelEvent] = node.props['vmodel']
       var tag = node.tag
       var props = node.props
 
-      var inputType = props['attrs']['type']
+      var inputType = props['attrs']['type'] || props['domProps']['type'] || 'text'
       var isInput = tag === 'input'
       var isText = (isInput && (inputType === 'text')) || (tag === 'textarea')
       var isRadio =  isInput && (inputType === 'radio')
       var isCheckbox = isInput && (inputType === 'checkbox')
       var isSelect = tag === 'select'
-      //- 针对rainbow自定义vmodel的组件
-      var isRRadio = tag === 'r-radio' || tag === 'r-checkbox'
-
 
       if (isText){
         props['domProps']['value'] = jsx.getProp(context, model)
@@ -141,14 +138,11 @@ var jsx = {
       }
       //- 假设其他都是自定义组件
       else {
-        var modelProp = 'value'
-
-        if (isRRadio){
-          modelProp = 'checkedValue'
-        }
+        modelProp = modelProp || 'value'
+        modelEvent = modelEvent || 'input'
 
         props['props'][modelProp] = jsx.getProp(context, model)
-        props['on']['input'] = val => {
+        props['on'][modelEvent] = val => {
           jsx.setProp(context, model, val)
         }
       }

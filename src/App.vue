@@ -8,7 +8,7 @@
 <script>
 import jsx from './index'
 
-var {div, p, span} = jsx
+var {div, p, span, input, textarea} = jsx
 
 var TestBind = {
   render (h) {
@@ -18,17 +18,44 @@ var TestBind = {
   }
 }
 
+var TestInput = {
+  model: {
+    prop: 'testValue',
+    event: 'testInput',
+  },
+  props: {
+    testValue: String,
+  },
+  render () {
+    var me = this
+
+    return input({
+      dp_value: this.testValue,
+      o_input (e) {
+        me.$emit('testInput', e.target.value)
+      }
+    })
+  }
+}
+
 var HelloWorld = {
   props: {
     msg: String
   },
+  data () {
+    return {
+      inputVal: '123',
+    }
+  }, 
   components: {
     TestBind,
+    TestInput,
   },
   render (h) {
     jsx.use(h)
 
     var test = jsx.bind('test-bind')
+    var testInput = jsx.bind('test-input')
 
     var $pnode = p({
       s_color: 'red',
@@ -38,6 +65,16 @@ var HelloWorld = {
       this.msg, 
       $pnode,
       test(),
+      input({
+        vmodel: [this, 'inputVal'],
+      }),
+      textarea({
+        vif: false,
+        vmodel: [this, 'inputVal']
+      }),
+      testInput({
+        vmodel: [this, 'inputVal', 'testValue', 'testInput']
+      })
     )
   }
 }

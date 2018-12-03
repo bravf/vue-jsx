@@ -40,6 +40,13 @@ var HelloWorld = {
     jsx.create('div.hello')
     jsx.create('div.hello + world')
     jsx.create('div', {
+      // vif，就是 v-if
+      vif: false,
+
+      // vmodel，就是 v-model
+      // 最多支持4个参数，vmodel: [this, 'val' ,'modelProp', 'modelEvent']
+      vmodel: [this, 'val'],
+
       // c 表示 class
       c_hello: true,
       
