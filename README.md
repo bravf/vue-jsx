@@ -21,7 +21,8 @@ const HelloWorld = {
   },
   render (h) {
     jsx.use(h)
-    render jsx.create('div', {
+    
+    return jsx.create('div', {
       style_color:'red', 
       classes: 'hello world',
     }, this.msg)
