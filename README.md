@@ -15,7 +15,7 @@ npm install --save vue-jsx
 ```javascript
 import jsx from 'vue-jsx'
 
-var HelloWorld = {
+const HelloWorld = {
   props: {
     msg: String,
   },
@@ -42,7 +42,7 @@ var HelloWorld = {
     jsx.create('div')
 
     // class 的简写模式
-    jsx.create('div.hello + world)
+    jsx.create('div.hello + world')
     
     jsx.create('div', {
       // vif，就是 v-if
@@ -88,7 +88,7 @@ import jsx from 'vue-jsx'
 
 const {div, h2, p, span, img} = jsx
 
-var HelloWord = {
+const HelloWord = {
   props: {
     data: Array,
   },
