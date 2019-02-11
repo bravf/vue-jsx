@@ -22,7 +22,19 @@ var jsx = {
     jsx.h = h
   },
   create (...params) {
-    var node = {tag: 'div', props: {'class':{},style:{},attrs:{},props:{},domProps:{},on:{},nativeOn:{}}, children: []}
+    var node = {
+      tag: 'div', 
+      props: {
+        'class': {},
+        style: {},
+        attrs: {},
+        props: {},
+        domProps: {},
+        on: {},
+        nativeOn: {},
+      }, 
+      children: [],
+    }
     var plen = params.length
     if (!plen){
       return node
@@ -31,15 +43,24 @@ var jsx = {
     if (plen > 1){
       var second = params[1]
       var i = 1
+      var secondIsObjeect = Object.prototype.toString.call(second).slice(8, -1) === 'Object'
 
       // 如果第二个参数是 props
-      if ( (Object.prototype.toString.call(second).slice(8, -1) === 'Object') && !('componentInstance' in second) ){
+      if (secondIsObjeect && !('componentInstance' in second) ){
         // 如果有vif===false，直接返回null
         if (second['vif'] === false){
           return null
         }
 
-        var table = {c:'class', s:'style', a:'attrs', p:'props', dp:'domProps', o:'on', no:'nativeOn'}
+        var table = {
+          c: 'class',
+          s: 'style', 
+          a: 'attrs', 
+          p: 'props', 
+          dp: 'domProps',
+          o: 'on',
+          no: 'nativeOn',
+        }
 
         for (var k in second){
           // 如果值是null，则过滤
@@ -49,7 +70,7 @@ var jsx = {
 
           if (k.includes('_')){
             var [a, b] = k.split('_')
-            var aa = table[a]
+            var aa = table[a] || a
 
             node['props'][aa][b] = second[k]
           }
@@ -75,6 +96,15 @@ var jsx = {
     }
     else {
       node['tag'] = first
+    }
+
+    //- 处理 classes
+    if ('classes' in node.props){
+      node.props.classes.split(' ').forEach(cls => {
+        node.props['class'][cls] = true
+      })
+
+      delete node.props['classes']
     }
 
     //- 处理vmodel
@@ -146,6 +176,8 @@ var jsx = {
           jsx.setProp(context, model, val)
         }
       }
+
+      delete node.props['vmodel']
     }
 
     if (!Object.keys(node.props.class).length){
@@ -168,7 +200,7 @@ var jsx = {
   }
 }
 
-'a,b,button,dd,div,dl,dt,em,form,i,iframe,img,input,textarea,label,li,ol,optgroup,option,p,select,span,table,th,thead,tbody,tr,td,col,colgroup,ul,h1,h2,h3,h4,h5,h6,slot'.split(',').forEach(tag => {
+'a,b,button,dd,div,dl,dt,em,form,i,iframe,img,input,textarea,label,li,ol,optgroup,option,p,select,span,table,th,thead,tbody,tr,td,col,colgroup,ul,h1,h2,h3,h4,h5,h6'.split(',').forEach(tag => {
   jsx[tag] = jsx.bind(tag)
 })
 

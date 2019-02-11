@@ -8,7 +8,7 @@
 <script>
 import jsx from './index'
 
-var {div, p, span, input, textarea} = jsx
+const {div, p, span, input, textarea} = jsx
 
 var TestBind = {
   render (h) {
@@ -26,13 +26,15 @@ var TestInput = {
   props: {
     testValue: String,
   },
-  render () {
-    var me = this
+  render (h) {
+    jsx.use(h)
+    const me = this
 
     return input({
-      dp_value: this.testValue,
-      o_input (e) {
+      domProps_value: this.testValue,
+      on_input (e) {
         me.$emit('testInput', e.target.value)
+        me.$emit('testEvent', e.target.value)
       }
     })
   }
@@ -54,17 +56,17 @@ var HelloWorld = {
   render (h) {
     jsx.use(h)
 
-    var test = jsx.bind('test-bind')
-    var testInput = jsx.bind('test-input')
+    const Test = jsx.bind('test-bind')
+    const TestInput = jsx.bind('test-input')
 
-    var $pnode = p({
-      s_color: 'red',
+    const $pnode = p({
+      style_color: 'red',
     }, this.msg)
 
-    return jsx.create('div.hello + world', 
+    return jsx.create('div', {classes: 'hello world'},
       this.msg, 
       $pnode,
-      test(),
+      Test(),
       input({
         vmodel: [this, 'inputVal'],
       }),
@@ -72,8 +74,11 @@ var HelloWorld = {
         vif: false,
         vmodel: [this, 'inputVal']
       }),
-      testInput({
-        vmodel: [this, 'inputVal', 'testValue', 'testInput']
+      TestInput({
+        vmodel: [this, 'inputVal', 'testValue', 'testInput'],
+        'on_testEvent' (value) {
+          console.log(value)
+        }
       })
     )
   }

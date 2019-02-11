@@ -21,7 +21,10 @@ var HelloWorld = {
   },
   render (h) {
     jsx.use(h)
-    render jsx.create('div.hello', {s_color:'red'}, this.msg)
+    render jsx.create('div', {
+      style_color:'red', 
+      classes: 'hello world',
+    }, this.msg)
   }
 }
 ```
@@ -37,8 +40,10 @@ var HelloWorld = {
   描述：创建 vnode 节点
   用法：
     jsx.create('div')
-    jsx.create('div.hello')
-    jsx.create('div.hello + world')
+
+    // class 的简写模式
+    jsx.create('div.hello + world)
+    
     jsx.create('div', {
       // vif，就是 v-if
       vif: false,
@@ -47,41 +52,30 @@ var HelloWorld = {
       // 最多支持4个参数，vmodel: [this, 'val' ,'modelProp', 'modelEvent']
       vmodel: [this, 'val'],
 
-      // c 表示 class
-      c_hello: true,
-      
-      // s 表示 style 
-      s_color: 'red',
-
-      // a 表示 attrs
-      a_id: 'my_id',
-
-      // p 表示 props
-      p_msg: 'hello, world',
-
-      // dp 表示 domProps
-      dp_value: 'input value',
-
-      // o 表示 on
-      o_click () {},
-
-      // no 表示 nativeOn
-      no_click () {},
+      classes: 'hello world',
+      class_hello: true,
+      style_color: 'red',
+      attrs_id: 'my_id',
+      props_msg: 'hello, world',
+      domProps_value: 'input value',
+      on_click () {},
+      nativeOn_click () {},
     })
-    jsx.create('div', {s_color:'red'}, 'nihao', 'nihao2')
+
+    jsx.create('div', {style_color:'red'}, 'nihao', 'nihao2')
 
 3、jsx.bind
   描述：构建快捷方式
   用法：
-    var div = jsx.bind('div')
-    var helloWorld = jsx.bind('hello-world')
+    const div = jsx.bind('div')
+    const HelloWorld = jsx.bind('hello-world')
 
-    var App = {
+    const App = {
       render (h) {
         jsx.use(h)
 
-        return div({s_color:'red'}, 
-          helloWorld()
+        return div({style_color:'red'}, 
+          HelloWorld()
         )
       }
     }
@@ -92,7 +86,7 @@ var HelloWorld = {
 ``` javascript
 import jsx from 'vue-jsx'
 
-var {div, h2, p, span, img} = jsx
+const {div, h2, p, span, img} = jsx
 
 var HelloWord = {
   props: {
@@ -106,7 +100,7 @@ var HelloWord = {
       div('.hello-world-list'
         ...this.data.map(item => {
           return div('.hello-world-item',
-            img({a_src: item.imgSrc}),
+            img({attrs_src: item.imgSrc}),
             p(item.content),
           )
         })
