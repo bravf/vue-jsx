@@ -8,7 +8,7 @@
 <script>
 import jsx from './index'
 
-const {div, p, span, input, textarea} = jsx
+const {p, span, input, textarea} = jsx
 
 var TestBind = {
   render (h) {
@@ -26,17 +26,23 @@ var TestInput = {
   props: {
     testValue: String,
   },
-  render (h) {
+  render (h) {window._h1 = h
+    console.log('test input render begin')
+    
     jsx.use(h)
     const me = this
 
-    return input({
+    const $node = input({
       domProps_value: this.testValue,
       on_input (e) {
         me.$emit('testInput', e.target.value)
         me.$emit('testEvent', e.target.value)
       }
     })
+
+    console.log('test input render end')
+
+    return $node
   }
 }
 
@@ -53,7 +59,8 @@ var HelloWorld = {
     TestBind,
     TestInput,
   },
-  render (h) {
+  render (h) {window._h2 = h
+    console.log('hello world render begin')
     jsx.use(h)
 
     const Test = jsx.bind('test-bind')
@@ -63,7 +70,7 @@ var HelloWorld = {
       style_color: 'red',
     }, this.msg)
 
-    return jsx.create('div', {classes: 'hello world'},
+    const $node = jsx.create('div', {classes: 'hello world'},
       this.msg, 
       $pnode,
       Test(),
@@ -81,6 +88,8 @@ var HelloWorld = {
         }
       })
     )
+    console.log('hello world render end')
+    return $node
   }
 }
 
