@@ -8,13 +8,13 @@
 <script>
 import jsx from './index'
 
-const {p, span, input, textarea} = jsx
+const {use, bind, create, p, span, input, textarea} = jsx
 
 var TestBind = {
   render (h) {
-    jsx.use(h)
+    use(h)
 
-    return span('test bind')
+    return span({style_color: 'red'}, 'test bind')
   }
 }
 
@@ -29,7 +29,7 @@ var TestInput = {
   render (h) {window._h1 = h
     console.log('test input render begin')
     
-    jsx.use(h)
+    use(h)
     const me = this
 
     const $node = input({
@@ -53,6 +53,8 @@ var HelloWorld = {
   data () {
     return {
       inputVal: '123',
+      flag: false,
+      flagValue: 1,
     }
   }, 
   components: {
@@ -61,16 +63,20 @@ var HelloWorld = {
   },
   render (h) {window._h2 = h
     console.log('hello world render begin')
-    jsx.use(h)
+    use(h)
 
-    const Test = jsx.bind('test-bind')
-    const TestInput = jsx.bind('test-input')
+    if (this.flag){
+      console.log(this.flagValue)
+    }
+
+    const Test = bind('test-bind')
+    const TestInput = bind('test-input')
 
     const $pnode = p({
       style_color: 'red',
     }, this.msg)
 
-    const $node = jsx.create('div', {classes: 'hello world'},
+    const $node = create('div', {classes: 'hello world'},
       this.msg, 
       $pnode,
       Test(),
