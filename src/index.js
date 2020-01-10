@@ -181,11 +181,11 @@ var jsx = {
     }
 
     // 清楚空的属性
-    for (var key in node.props){
+    ['class', 'style', 'attrs', 'props', 'domProps', 'on', 'nativeOn'].forEach(key => {
       if (!Object.keys(node.props[key]).length){
         delete node.props[key]
       }
-    }
+    })
 
     return jsx.h(node.tag, node.props, node.children)
   },
