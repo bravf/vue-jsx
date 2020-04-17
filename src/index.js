@@ -115,7 +115,8 @@ var jsx = {
 
       var inputType = props['attrs']['type'] || props['domProps']['type'] || 'text'
       var isInput = tag === 'input'
-      var isText = (isInput && (inputType === 'text')) || (tag === 'textarea')
+      var isText = (isInput && ['text', 'hidden', 'password', 'number'].includes(inputType)) || 
+        (tag === 'textarea')
       var isRadio =  isInput && (inputType === 'radio')
       var isCheckbox = isInput && (inputType === 'checkbox')
       var isSelect = tag === 'select'

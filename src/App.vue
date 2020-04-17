@@ -81,20 +81,21 @@ var HelloWorld = {
       $pnode,
       Test(),
       input({
+        domProps_type: 'password',
         vmodel: [this, 'inputVal'],
       }),
-      textarea({
-        vif: false,
-        vmodel: [this, 'inputVal']
-      }),
-      TestInput({
-        vmodel: [this, 'inputVal', 'testValue', 'testInput'],
-        'on_testEvent' (value) {
-          console.log(value)
-        }
-      })
+      // textarea({
+      //   vif: false,
+      //   vmodel: [this, 'inputVal']
+      // }),
+      // TestInput({
+      //   vmodel: [this, 'inputVal', 'testValue', 'testInput'],
+      //   'on_testEvent' (value) {
+      //     console.log(value)
+      //   }
+      // })
     )
-    console.log('hello world render end')
+    console.log('hello world render end', this.inputVal)
     return $node
   }
 }
